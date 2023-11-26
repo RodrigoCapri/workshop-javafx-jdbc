@@ -2,6 +2,7 @@ package gui.util;
 
 import javafx.scene.control.TextField;
 
+//Classe utilitária para controle de entradas
 public class Constraints {
 
 	public static void setTextFieldInteger(TextField txt) {
