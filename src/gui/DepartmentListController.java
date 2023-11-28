@@ -44,7 +44,10 @@ public class DepartmentListController implements Initializable{
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		this.createDialogForm("/gui/DepartmentForm.fxml", parentStage);
+		
+		Department obj = new Department();
+		
+		this.createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);
 	}
 	
 	public void setDepartmentService(DepartmentService service) {
@@ -71,11 +74,17 @@ public class DepartmentListController implements Initializable{
 		this.tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
 			
 			FXMLLoader loader = new FXMLLoader(this.getClass().getResource(absoluteName)); //Carrega o cenário da fxml informada
 			Pane pane = loader.load(); //Adiciona o cenario em um Pane
+			
+			//Pega o controlador da tela qua acabou de carregar acima
+			DepartmentFormController controller = loader.getController();
+			//Passando o objeto Department para o Formulário
+			controller.setDepartment(obj);
+			controller.updateFormDate();
 			
 			Stage dialogStage = new Stage(); //Nova cena para aparecer na frente de outra cena
 			dialogStage.setTitle("Enter Department data"); //Definindo o titulo
