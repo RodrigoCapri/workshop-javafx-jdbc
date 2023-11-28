@@ -6,6 +6,7 @@ import model.dao.Dao;
 import model.dao.DaoFactory;
 import model.entities.Department;
 
+//Clase de serviço do Department
 public class DepartmentService {
 	
 	private Dao<Department> dao = DaoFactory.createDepartmentDao();
