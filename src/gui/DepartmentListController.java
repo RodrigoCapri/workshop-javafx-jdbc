@@ -84,6 +84,7 @@ public class DepartmentListController implements Initializable{
 			DepartmentFormController controller = loader.getController();
 			//Passando o objeto Department para o Formulário
 			controller.setDepartment(obj);
+			controller.setDepartmentService(new DepartmentService());
 			controller.updateFormDate();
 			
 			Stage dialogStage = new Stage(); //Nova cena para aparecer na frente de outra cena
