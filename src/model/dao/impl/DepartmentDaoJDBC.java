@@ -40,7 +40,7 @@ public class DepartmentDaoJDBC implements Dao<Department>{
 				ResultSet rs = st.getGeneratedKeys();
 				if(rs.next()) {
 					int id = rs.getInt(1);
-					System.out.println("rows affected "+rows_affected+" id="+id);
+					System.out.println("Rows affected "+rows_affected+" id="+id);
 				}
 				DB.closeResultSet(rs);
 			}else {
@@ -64,21 +64,24 @@ public class DepartmentDaoJDBC implements Dao<Department>{
 					+ "SET "
 					+ "name= ? "
 					+ "WHERE id= ?",
-					Statement.RETURN_GENERATED_KEYS);
+					Statement.RETURN_GENERATED_KEYS); //Configura pra regornar um ResultSet com o id do registro afetado
 			st.setString(1, obj.getName());
 			st.setInt(2, obj.getId());
 			
 			int rows_affected = st.executeUpdate();
 			
-			if(rows_affected > 0) {
+			if(rows_affected > 0) { //Verifica se houve alguma linha afetada
+				
 				ResultSet rs = st.getGeneratedKeys();
+				
 				if(rs.next()) {
 					int id = rs.getInt(1);
-					System.out.println("rows affected= "+rows_affected+" - "+id);
+					System.out.println("Rows affected= "+rows_affected+" - "+id);
 				}
 				DB.closeResultSet(rs);
+				
 			}else
-				throw new DbException("erro ao atualizar registro!");
+				throw new DbException("Erro ao atualizar registro!");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -166,6 +169,7 @@ public class DepartmentDaoJDBC implements Dao<Department>{
 		}
 	}
 	
+	//Método auxiliar para recuperar o objeto do ResultSet
 	private Department instantiateDepartment(ResultSet rs) throws SQLException {
 		Department obj = new Department();
 		obj.setId(rs.getInt("id"));
