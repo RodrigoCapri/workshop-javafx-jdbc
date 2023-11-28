@@ -1,9 +1,12 @@
 package gui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import db.DbException;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
@@ -17,10 +20,13 @@ import javafx.scene.control.TextField;
 import model.entities.Department;
 import model.services.DepartmentService;
 
+//Classe subject, classe que eminte o evento
 public class DepartmentFormController implements Initializable {
 
 	private Department entity;
 	private DepartmentService service;
+	
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<DataChangeListener>();
 
 	@FXML
 	private TextField txtId;
@@ -47,6 +53,8 @@ public class DepartmentFormController implements Initializable {
 		try {
 			this.entity = this.getFormData(); //Carrega os dados do formulario
 			this.service.saveOrUpdate(entity);
+			
+			notifyDataChangeListeners();
 			
 			Utils.currentStage(event).close(); //Fecha a janela atual
 			
@@ -88,6 +96,18 @@ public class DepartmentFormController implements Initializable {
 		obj.setName(this.txtName.getText());
 
 		return obj;
+	}
+	
+	//Adiciona uma inscrição a chamada do evento
+	public void subscribeDataChangeListener(DataChangeListener listener) {
+		this.dataChangeListeners.add(listener);
+	}
+	
+	//Chama todos os eventos
+	private void notifyDataChangeListeners() {
+		for(DataChangeListener listener : this.dataChangeListeners) {
+			listener.onDataChanged();
+		}
 	}
 
 	@Override
