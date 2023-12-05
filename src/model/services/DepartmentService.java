@@ -23,4 +23,9 @@ public class DepartmentService {
 		}
 	}
 	
+	//Metodo que remove um departamento numa base de dados
+	public void remove(Department obj) {
+		dao.deleteById(obj.getId());
+	}
+	
 }
