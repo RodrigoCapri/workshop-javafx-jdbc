@@ -1,6 +1,7 @@
 package gui;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -32,12 +33,25 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 	@FXML
 	private TableView<Seller> tableViewSeller;
+	
 	@FXML
 	private TableColumn<Seller, Integer> tableColumnId; // Classe identidade, tipo da coluna especificada
+	
 	@FXML
 	private TableColumn<Seller, String> tableColumnName;
+	
+	@FXML
+	private TableColumn<Seller, String> tableColumnEmail;
+	
+	@FXML
+	private TableColumn<Seller, Date> tableColumnBirthDate;
+	
+	@FXML
+	private TableColumn<Seller, Double> tableColumnBaseSalary;
+	
 	@FXML
 	private TableColumn<Seller, Seller> tableColumnEdit;
+	
 	@FXML
 	private TableColumn<Seller, Seller> tableColumnRemove;
 
@@ -77,6 +91,11 @@ public class SellerListController implements Initializable, DataChangeListener {
 	private void initializeNodes() {
 		this.tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		this.tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		this.tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		this.tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+		Utils.formatTableColumnDate(this.tableColumnBirthDate, "dd/MM/yyyy");
+		this.tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
+		Utils.formatTableColumnDouble(this.tableColumnBaseSalary, 2); //Numero de casas decimais
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		// Macete para fazer a table view acompanhar a altura da janela
