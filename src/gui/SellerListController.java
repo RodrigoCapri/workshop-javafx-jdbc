@@ -32,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
+import model.services.DepartmentService;
 import model.services.SellerService;
 
 public class SellerListController implements Initializable, DataChangeListener {
@@ -119,7 +120,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 			SellerFormController controller = loader.getController();
 			// Passando o objeto Seller para o Formulário
 			controller.setSeller(obj);
-			controller.setSellerService(new SellerService());
+			controller.setSellerServices(new SellerService(), new DepartmentService());
+			controller.loadAssociateObjects(); //Associa os objetos do banco com o ObsList no combo box
 			// Se increve no evento
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormDate();
@@ -135,6 +137,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 			dialogStage.showAndWait(); // Mostra a tela enquanto aguarda
 
 		} catch (IOException ex) {
+			ex.printStackTrace();
 			Alerts.showAlert("IO EXception", "Error load view!", ex.getMessage(), AlertType.ERROR);
 		}
 	}
